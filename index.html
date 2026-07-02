@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Add TBC South Calendar</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f4f5f7; color: #1b1b1f; padding: 20px;
+    }
+    @media (prefers-color-scheme: dark) { body { background: #16171a; color: #e8e8ea; } }
+    .card {
+      width: 100%; max-width: 440px; background: #fff; border-radius: 18px;
+      padding: 28px 24px 24px; box-shadow: 0 10px 40px rgba(0,0,0,.12); text-align: center;
+    }
+    @media (prefers-color-scheme: dark) { .card { background: #232428; box-shadow: 0 10px 40px rgba(0,0,0,.5); } }
+    h1 { font-size: 1.35rem; margin: 0 0 6px; }
+    p.sub { margin: 0 0 22px; opacity: .7; font-size: .95rem; }
+    button, a.btn {
+      display: block; width: 100%; padding: 15px 18px; margin: 10px 0; border: none;
+      border-radius: 12px; font-size: 1.02rem; font-weight: 600; cursor: pointer;
+      text-decoration: none; transition: transform .05s ease, filter .15s ease;
+    }
+    button:active, a.btn:active { transform: scale(.98); }
+    .primary { background: #1a73e8; color: #fff; }
+    .apple  { background: #111; color: #fff; }
+    .outlook{ background: #0f6cbd; color: #fff; }
+    .samsung{ background: #1428a0; color: #fff; }
+    .ghost  { background: transparent; color: inherit; border: 1px solid rgba(128,128,128,.35); font-weight: 500; }
+    .steps { text-align: left; margin: 18px 2px 0; font-size: .9rem; opacity: .85; line-height: 1.5; }
+    .steps li { margin-bottom: 4px; }
+    .toast {
+      position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px);
+      background: #1b1b1f; color: #fff; padding: 12px 20px; border-radius: 30px; font-size: .9rem;
+      opacity: 0; pointer-events: none; transition: all .25s ease; z-index: 99;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .hidden { display: none !important; }
+    code { background: rgba(128,128,128,.15); padding: 2px 6px; border-radius: 5px; font-size: .82rem; word-break: break-all; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Add “TBC South” Calendar</h1>
+    <p class="sub" id="sub">Subscribe once — it stays up to date automatically.</p>
+
+    <!-- ANDROID / GOOGLE -->
+    <div id="android" class="hidden">
+      <button class="primary" id="googleBtn">📅 Copy link &amp; open Google Calendar</button>
+      <ol class="steps">
+        <li>Tapping above copies the calendar link and opens Google’s <b>“From URL”</b> page.</li>
+        <li>Tap the URL box → <b>Paste</b> → tap <b>Add calendar</b>. Done ✅</li>
+      </ol>
+      <a class="btn samsung" id="samsungBtn" href="#">📲 Add to Samsung Calendar</a>
+      <p class="steps" style="margin-top:6px">Samsung <i>imports</i> the events (a snapshot, not auto-syncing).</p>
+    </div>
+
+    <!-- IPHONE / APPLE -->
+    <div id="ios" class="hidden">
+      <a class="btn apple" id="appleBtn" href="#">🍎 Add to Apple Calendar (1 tap)</a>
+      <p class="steps">Your phone will ask to subscribe — tap <b>Subscribe</b>. Done ✅</p>
+    </div>
+
+    <!-- DESKTOP / OTHER -->
+    <div id="desktop" class="hidden">
+      <button class="primary" id="googleBtnD">📋 Copy link &amp; open Google Calendar</button>
+      <a class="btn apple" id="appleBtnD" href="#">🍎 Add to Apple Calendar</a>
+      <a class="btn samsung" id="samsungBtnD" href="#">📲 Add to Samsung Calendar</a>
+      <ol class="steps">
+        <li>Google: after the page opens, paste the copied link and click <b>Add calendar</b>.</li>
+        <li>Outlook: opens a subscribe page with the link already filled in — just confirm.</li>
+        <li>Samsung: downloads the <code>.ics</code> to import (a snapshot, not auto-syncing).</li>
+      </ol>
+    </div>
+
+    <!-- OUTLOOK (cross-platform, shown to everyone) -->
+    <a class="btn outlook" id="outlookBtn" href="#">📧 Add to Outlook Calendar</a>
+
+    <!-- universal fallback -->
+    <button class="ghost" id="copyOnly">Just copy the calendar link</button>
+  </div>
+
+  <div class="toast" id="toast">Link copied ✓</div>
+
+  <script>
+    // ---- CONFIG: only this line changes if the feed URL ever changes ----
+    const ICS_URL = 'https://api.chmeetings.com/client/tbc/C9EC3A136A5FE66E/Calendar/ICal/';
+    // --------------------------------------------------------------------
+
+    const CAL_NAME = 'TBC South';
+    const WEBCAL   = ICS_URL.replace(/^https?:\/\//i, 'webcal://');
+    const ADDBYURL = 'https://calendar.google.com/calendar/u/0/r/settings/addbyurl';
+    // Outlook.com deep link — pre-fills the feed URL & name, user just confirms
+    const OUTLOOK  = 'https://outlook.live.com/calendar/0/addfromweb?url=' +
+                     encodeURIComponent(ICS_URL) + '&name=' + encodeURIComponent(CAL_NAME);
+    const ua = navigator.userAgent || '';
+    const isIOS     = /iPhone|iPad|iPod/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isAndroid = /Android/i.test(ua);
+
+    const toast = document.getElementById('toast');
+    function showToast(msg) {
+      toast.textContent = msg; toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+    async function copyLink() {
+      try {
+        await navigator.clipboard.writeText(ICS_URL);
+        showToast('Calendar link copied ✓');
+        return true;
+      } catch (e) {
+        // Fallback for older browsers
+        const t = document.createElement('textarea');
+        t.value = ICS_URL; t.style.position = 'fixed'; t.style.opacity = '0';
+        document.body.appendChild(t); t.focus(); t.select();
+        let ok = false; try { ok = document.execCommand('copy'); } catch (_) {}
+        document.body.removeChild(t);
+        showToast(ok ? 'Calendar link copied ✓' : 'Tap & hold to copy the link below');
+        return ok;
+      }
+    }
+    function openGoogle() {
+      copyLink().finally(() => { setTimeout(() => { window.location.href = ADDBYURL; }, 500); });
+    }
+    function openApple(e)   { if (e) e.preventDefault(); window.location.href = WEBCAL; }
+    function openOutlook(e)  { if (e) e.preventDefault(); window.location.href = OUTLOOK; }
+    function openSamsung(e)  { if (e) e.preventDefault(); window.location.href = ICS_URL; }
+
+    // Wire up per platform
+    if (isAndroid) {
+      document.getElementById('android').classList.remove('hidden');
+      document.getElementById('googleBtn').addEventListener('click', openGoogle);
+      document.getElementById('samsungBtn').addEventListener('click', openSamsung);
+    } else if (isIOS) {
+      document.getElementById('ios').classList.remove('hidden');
+      document.getElementById('appleBtn').addEventListener('click', openApple);
+    } else {
+      document.getElementById('desktop').classList.remove('hidden');
+      document.getElementById('googleBtnD').addEventListener('click', openGoogle);
+      document.getElementById('appleBtnD').addEventListener('click', openApple);
+      document.getElementById('samsungBtnD').addEventListener('click', openSamsung);
+    }
+    // Outlook is cross-platform — available on every view
+    document.getElementById('outlookBtn').addEventListener('click', openOutlook);
+    document.getElementById('copyOnly').addEventListener('click', copyLink);
+  </script>
+</body>
+</html>
