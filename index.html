@@ -80,8 +80,6 @@
     <!-- OUTLOOK (cross-platform, shown to everyone) -->
     <a class="btn outlook" id="outlookBtn" href="#">📧 Add to Outlook Calendar</a>
 
-    <!-- universal fallback -->
-    <button class="ghost" id="copyOnly">Just copy the calendar link</button>
   </div>
 
   <div class="toast" id="toast">Link copied ✓</div>
@@ -145,7 +143,6 @@
     }
     // Outlook is cross-platform — available on every view
     document.getElementById('outlookBtn').addEventListener('click', openOutlook);
-    document.getElementById('copyOnly').addEventListener('click', copyLink);
   </script>
 </body>
 </html>
