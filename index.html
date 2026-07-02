@@ -9,80 +9,172 @@
     * { box-sizing: border-box; }
     body {
       margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f4f5f7; color: #1b1b1f; padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #eceef1; color: #1b1b1f; padding: 20px; -webkit-font-smoothing: antialiased;
     }
-    @media (prefers-color-scheme: dark) { body { background: #16171a; color: #e8e8ea; } }
+    @media (prefers-color-scheme: dark) { body { background: #131417; color: #e8e8ea; } }
     .card {
-      width: 100%; max-width: 440px; background: #fff; border-radius: 18px;
-      padding: 28px 24px 24px; box-shadow: 0 10px 40px rgba(0,0,0,.12); text-align: center;
+      width: 100%; max-width: 420px; background: #fff; border-radius: 20px;
+      padding: 32px 26px 26px; box-shadow: 0 12px 44px rgba(0,0,0,.10); text-align: center;
+      border: 1px solid rgba(0,0,0,.04);
     }
-    @media (prefers-color-scheme: dark) { .card { background: #232428; box-shadow: 0 10px 40px rgba(0,0,0,.5); } }
-    h1 { font-size: 1.35rem; margin: 0 0 6px; }
-    p.sub { margin: 0 0 22px; opacity: .7; font-size: .95rem; }
-    button, a.btn {
-      display: block; width: 100%; padding: 15px 18px; margin: 10px 0; border: none;
-      border-radius: 12px; font-size: 1.02rem; font-weight: 600; cursor: pointer;
-      text-decoration: none; transition: transform .05s ease, filter .15s ease;
+    @media (prefers-color-scheme: dark) { .card { background: #1e1f23; box-shadow: 0 12px 44px rgba(0,0,0,.55); border-color: rgba(255,255,255,.06); } }
+    .logo {
+      width: 52px; height: 52px; margin: 0 auto 16px; border-radius: 14px;
+      background: linear-gradient(135deg,#2563eb,#1e40af); display: flex; align-items: center; justify-content: center;
     }
-    button:active, a.btn:active { transform: scale(.98); }
-    .primary { background: #1a73e8; color: #fff; }
-    .apple  { background: #111; color: #fff; }
-    .outlook{ background: #0f6cbd; color: #fff; }
-    .samsung{ background: #1428a0; color: #fff; }
-    .ghost  { background: transparent; color: inherit; border: 1px solid rgba(128,128,128,.35); font-weight: 500; }
-    .steps { text-align: left; margin: 18px 2px 0; font-size: .9rem; opacity: .85; line-height: 1.5; }
-    .steps li { margin-bottom: 4px; }
+    h1 { font-size: 1.3rem; font-weight: 650; margin: 0 0 6px; letter-spacing: -.01em; }
+    p.sub { margin: 0 0 24px; opacity: .62; font-size: .92rem; }
+    .btn {
+      display: flex; align-items: center; gap: 13px; width: 100%; padding: 13px 16px; margin: 9px 0;
+      border: 1px solid rgba(0,0,0,.09); border-radius: 13px; font-size: .98rem; font-weight: 550;
+      cursor: pointer; text-decoration: none; text-align: left; color: #1b1b1f; background: #fff;
+      transition: transform .06s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    @media (prefers-color-scheme: dark) { .btn { background: #26272c; color: #e8e8ea; border-color: rgba(255,255,255,.09); } }
+    .btn:hover { box-shadow: 0 4px 14px rgba(0,0,0,.08); border-color: rgba(0,0,0,.16); }
+    @media (prefers-color-scheme: dark) { .btn:hover { border-color: rgba(255,255,255,.2); box-shadow: 0 4px 14px rgba(0,0,0,.4); } }
+    .btn:active { transform: scale(.985); }
+    .btn .ico { flex: 0 0 24px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; }
+    .btn .lbl { flex: 1; }
+    .btn .chev { flex: 0 0 auto; opacity: .35; }
+    .divider { display: flex; align-items: center; gap: 12px; margin: 20px 2px 6px; }
+    .divider::before, .divider::after { content: ""; flex: 1; height: 1px; background: rgba(128,128,128,.22); }
+    .divider span { font-size: .74rem; letter-spacing: .06em; text-transform: uppercase; opacity: .5; font-weight: 600; }
+    .steps { text-align: left; margin: 14px 4px 0; font-size: .84rem; opacity: .68; line-height: 1.5; padding-left: 18px; }
+    .steps li { margin-bottom: 3px; }
+    .note { text-align: left; margin: 6px 4px 0; font-size: .78rem; opacity: .55; }
+    .warn {
+      text-align: left; margin: 10px 0 0; padding: 11px 13px; border-radius: 10px;
+      background: rgba(240,180,41,.12); border: 1px solid rgba(240,180,41,.35);
+      font-size: .8rem; line-height: 1.45;
+    }
+    .warn b { display: block; margin-bottom: 2px; }
+    .warn ul { margin: 4px 0 0; padding-left: 18px; }
+    .warn li { margin-bottom: 2px; }
+    .foot { margin: 22px 0 0; font-size: .74rem; opacity: .4; }
     .toast {
       position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px);
-      background: #1b1b1f; color: #fff; padding: 12px 20px; border-radius: 30px; font-size: .9rem;
+      background: #1b1b1f; color: #fff; padding: 12px 20px; border-radius: 30px; font-size: .88rem;
       opacity: 0; pointer-events: none; transition: all .25s ease; z-index: 99;
     }
     .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     .hidden { display: none !important; }
-    code { background: rgba(128,128,128,.15); padding: 2px 6px; border-radius: 5px; font-size: .82rem; word-break: break-all; }
+    code { background: rgba(128,128,128,.15); padding: 1px 5px; border-radius: 5px; font-size: .78rem; word-break: break-all; }
   </style>
 </head>
 <body>
   <div class="card">
+    <div class="logo">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="3" y="4.5" width="18" height="16" rx="3" stroke="#fff" stroke-width="1.7"/>
+        <path d="M3 9h18" stroke="#fff" stroke-width="1.7"/>
+        <path d="M8 2.5v4M16 2.5v4" stroke="#fff" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    </div>
     <h1>Add “TBC South” Calendar</h1>
-    <p class="sub" id="sub">Subscribe once — it stays up to date automatically.</p>
+    <p class="sub" id="sub">Subscribe once and it stays up to date automatically.</p>
 
     <!-- ANDROID / GOOGLE -->
     <div id="android" class="hidden">
-      <button class="primary" id="googleBtn">📅 Copy link &amp; open Google Calendar</button>
+      <button class="btn" id="googleBtn">
+        <span class="ico">
+          <svg width="21" height="21" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7A21.99 21.99 0 0 0 24 46z"/><path fill="#FBBC05" d="M11.69 28.18A13.2 13.2 0 0 1 11 24c0-1.45.25-2.86.69-4.18v-5.7H4.34A22 22 0 0 0 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.94 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
+        </span>
+        <span class="lbl">Google Calendar</span>
+        <span class="chev">&rsaquo;</span>
+      </button>
       <ol class="steps">
-        <li>Tapping above copies the calendar link and opens Google’s <b>“From URL”</b> page.</li>
-        <li>Tap the URL box → <b>Paste</b> → tap <b>Add calendar</b>. Done ✅</li>
+        <li><b>Tap the button above.</b> It copies the calendar link and opens Google’s <b>“From URL”</b> page.</li>
+        <li>Sign in to your Google account if asked.</li>
+        <li><b>Long-press the URL box</b> and choose <b>Paste</b>.</li>
+        <li>Tap <b>Add calendar</b>. The events appear within a few hours.</li>
       </ol>
-      <a class="btn samsung" id="samsungBtn" href="#">📲 Add to Samsung Calendar</a>
-      <p class="steps" style="margin-top:6px">Samsung <i>imports</i> the events (a snapshot, not auto-syncing).</p>
+      <div class="divider" style="margin-top:20px"><span>Or use Samsung</span></div>
+      <a class="btn" id="samsungBtn" href="#">
+        <span class="ico">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="3" stroke="#1428A0" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="#1428A0" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        <span class="lbl">Samsung Calendar</span>
+        <span class="chev">&rsaquo;</span>
+      </a>
+      <div class="warn">
+        <b>⚠ Samsung Calendar limitation</b>
+        Samsung can’t subscribe to a live calendar — it only <i>imports</i> a copy, so:
+        <ul>
+          <li>Events are a one-time snapshot and <b>won’t update</b> when we change the schedule.</li>
+          <li>You’ll need to <b>re-scan</b> this code to get the latest events.</li>
+        </ul>
+        For automatic updates, use <b>Google Calendar</b> above instead.
+      </div>
     </div>
 
     <!-- IPHONE / APPLE -->
     <div id="ios" class="hidden">
-      <a class="btn apple" id="appleBtn" href="#">🍎 Add to Apple Calendar (1 tap)</a>
-      <p class="steps">Your phone will ask to subscribe — tap <b>Subscribe</b>. Done ✅</p>
+      <a class="btn" id="appleBtn" href="#">
+        <span class="ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M17.05 12.94c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.1-2.01-3.77-2.04-1.6-.16-3.13.94-3.94.94-.81 0-2.07-.92-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.82 3.16-.47 7.83 1.3 10.39.86 1.25 1.89 2.66 3.23 2.61 1.3-.05 1.79-.84 3.36-.84 1.56 0 2.01.84 3.38.81 1.4-.02 2.28-1.28 3.13-2.54.99-1.46 1.4-2.87 1.42-2.94-.03-.01-2.72-1.04-2.75-4.13zM14.47 5.35c.71-.86 1.19-2.06 1.06-3.25-1.02.04-2.26.68-2.99 1.54-.66.76-1.23 1.98-1.08 3.15 1.14.09 2.3-.58 3.01-1.44z"/></svg>
+        </span>
+        <span class="lbl">Apple Calendar</span>
+        <span class="chev">&rsaquo;</span>
+      </a>
+      <ol class="steps">
+        <li><b>Tap the button above.</b></li>
+        <li>A box will pop up asking to subscribe — tap <b>Subscribe</b>.</li>
+        <li>Tap <b>Done</b>. The events are now in your Calendar app.</li>
+      </ol>
     </div>
 
     <!-- DESKTOP / OTHER -->
     <div id="desktop" class="hidden">
-      <button class="primary" id="googleBtnD">📋 Copy link &amp; open Google Calendar</button>
-      <a class="btn apple" id="appleBtnD" href="#">🍎 Add to Apple Calendar</a>
-      <a class="btn samsung" id="samsungBtnD" href="#">📲 Add to Samsung Calendar</a>
+      <button class="btn" id="googleBtnD">
+        <span class="ico">
+          <svg width="21" height="21" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M45.12 24.5c0-1.56-.14-3.06-.4-4.5H24v8.51h11.84c-.51 2.75-2.06 5.08-4.39 6.64v5.52h7.11c4.16-3.83 6.56-9.47 6.56-16.17z"/><path fill="#34A853" d="M24 46c5.94 0 10.92-1.97 14.56-5.33l-7.11-5.52c-1.97 1.32-4.49 2.1-7.45 2.1-5.73 0-10.58-3.87-12.31-9.07H4.34v5.7A21.99 21.99 0 0 0 24 46z"/><path fill="#FBBC05" d="M11.69 28.18A13.2 13.2 0 0 1 11 24c0-1.45.25-2.86.69-4.18v-5.7H4.34A22 22 0 0 0 2 24c0 3.55.85 6.91 2.34 9.88l7.35-5.7z"/><path fill="#EA4335" d="M24 10.75c3.23 0 6.13 1.11 8.41 3.29l6.31-6.31C34.91 4.18 29.93 2 24 2 15.4 2 7.96 6.94 4.34 14.12l7.35 5.7c1.73-5.2 6.58-9.07 12.31-9.07z"/></svg>
+        </span>
+        <span class="lbl">Google Calendar</span>
+        <span class="chev">&rsaquo;</span>
+      </button>
+      <a class="btn" id="appleBtnD" href="#">
+        <span class="ico">
+          <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M17.05 12.94c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.1-2.01-3.77-2.04-1.6-.16-3.13.94-3.94.94-.81 0-2.07-.92-3.4-.9-1.75.03-3.36 1.02-4.26 2.58-1.82 3.16-.47 7.83 1.3 10.39.86 1.25 1.89 2.66 3.23 2.61 1.3-.05 1.79-.84 3.36-.84 1.56 0 2.01.84 3.38.81 1.4-.02 2.28-1.28 3.13-2.54.99-1.46 1.4-2.87 1.42-2.94-.03-.01-2.72-1.04-2.75-4.13zM14.47 5.35c.71-.86 1.19-2.06 1.06-3.25-1.02.04-2.26.68-2.99 1.54-.66.76-1.23 1.98-1.08 3.15 1.14.09 2.3-.58 3.01-1.44z"/></svg>
+        </span>
+        <span class="lbl">Apple Calendar</span>
+        <span class="chev">&rsaquo;</span>
+      </a>
+      <a class="btn" id="samsungBtnD" href="#">
+        <span class="ico">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="3" stroke="#1428A0" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="#1428A0" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        <span class="lbl">Samsung Calendar</span>
+        <span class="chev">&rsaquo;</span>
+      </a>
       <ol class="steps">
-        <li>Google: after the page opens, paste the copied link and click <b>Add calendar</b>.</li>
-        <li>Outlook: opens a subscribe page with the link already filled in — just confirm.</li>
-        <li>Samsung: downloads the <code>.ics</code> to import (a snapshot, not auto-syncing).</li>
+        <li><b>Google:</b> the link is copied and Google’s <b>“From URL”</b> page opens — paste it and click <b>Add calendar</b>.</li>
+        <li><b>Apple:</b> confirm the <b>Subscribe</b> prompt in Calendar.</li>
+        <li><b>Samsung:</b> downloads an <code>.ics</code> snapshot to import.</li>
       </ol>
+      <div class="warn">
+        <b>⚠ Samsung Calendar limitation</b>
+        Samsung only imports a one-time copy — events <b>won’t auto-update</b>, so you’ll need to re-import to get schedule changes. Use <b>Google</b> or <b>Apple</b> for automatic updates.
+      </div>
     </div>
 
-    <!-- OUTLOOK (cross-platform, shown to everyone) -->
-    <a class="btn outlook" id="outlookBtn" href="#">📧 Add to Outlook Calendar</a>
+    <div class="divider"><span>Also works with Outlook</span></div>
 
+    <!-- OUTLOOK (cross-platform, shown to everyone) -->
+    <a class="btn" id="outlookBtn" href="#">
+      <span class="ico">
+        <svg width="21" height="21" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#0F6CBD" d="M13 3h8.4c.33 0 .6.27.6.6v16.8c0 .33-.27.6-.6.6H13V3z"/><path fill="#0A5A9E" d="M13 7.5h9v9h-9z" opacity=".35"/><path fill="#1B84D8" d="M22 8l-5 3.3v1.4L22 16z" opacity=".6"/><path fill="#28A8EA" d="M13 3H2.6c-.33 0-.6.27-.6.6V7l11 4V3z"/><rect x="1" y="6" width="13" height="12" rx="1.4" fill="#0F6CBD"/><path fill="#fff" d="M7.5 8.6c-1.9 0-3.2 1.4-3.2 3.4s1.3 3.4 3.2 3.4 3.2-1.4 3.2-3.4-1.3-3.4-3.2-3.4zm0 1.5c1 0 1.6.8 1.6 1.9s-.6 1.9-1.6 1.9-1.6-.8-1.6-1.9.6-1.9 1.6-1.9z"/></svg>
+      </span>
+      <span class="lbl">Outlook Calendar</span>
+      <span class="chev">&rsaquo;</span>
+    </a>
+    <p class="note">Opens Outlook.com with the link already filled in — just tap <b>Save</b> to subscribe.</p>
+
+    <p class="foot">TBC South</p>
   </div>
 
-  <div class="toast" id="toast">Link copied ✓</div>
+  <div class="toast" id="toast">Link copied</div>
 
   <script>
     // ---- CONFIG: only this line changes if the feed URL ever changes ----
@@ -107,16 +199,15 @@
     async function copyLink() {
       try {
         await navigator.clipboard.writeText(ICS_URL);
-        showToast('Calendar link copied ✓');
+        showToast('Calendar link copied');
         return true;
       } catch (e) {
-        // Fallback for older browsers
         const t = document.createElement('textarea');
         t.value = ICS_URL; t.style.position = 'fixed'; t.style.opacity = '0';
         document.body.appendChild(t); t.focus(); t.select();
         let ok = false; try { ok = document.execCommand('copy'); } catch (_) {}
         document.body.removeChild(t);
-        showToast(ok ? 'Calendar link copied ✓' : 'Tap & hold to copy the link below');
+        showToast(ok ? 'Calendar link copied' : 'Press and hold to copy the link');
         return ok;
       }
     }
@@ -127,7 +218,6 @@
     function openOutlook(e)  { if (e) e.preventDefault(); window.location.href = OUTLOOK; }
     function openSamsung(e)  { if (e) e.preventDefault(); window.location.href = ICS_URL; }
 
-    // Wire up per platform
     if (isAndroid) {
       document.getElementById('android').classList.remove('hidden');
       document.getElementById('googleBtn').addEventListener('click', openGoogle);
@@ -141,7 +231,6 @@
       document.getElementById('appleBtnD').addEventListener('click', openApple);
       document.getElementById('samsungBtnD').addEventListener('click', openSamsung);
     }
-    // Outlook is cross-platform — available on every view
     document.getElementById('outlookBtn').addEventListener('click', openOutlook);
   </script>
 </body>
