@@ -45,13 +45,13 @@
     .steps li { margin-bottom: 3px; }
     .note { text-align: left; margin: 6px 4px 0; font-size: .78rem; opacity: .55; }
     .warn {
-      text-align: left; margin: 10px 0 0; padding: 11px 13px; border-radius: 10px;
+      text-align: left; margin: 10px 0 0; padding: 12px 14px; border-radius: 10px;
       background: rgba(240,180,41,.12); border: 1px solid rgba(240,180,41,.35);
-      font-size: .8rem; line-height: 1.45;
+      font-size: .8rem; line-height: 1.5; opacity: .9;
     }
-    .warn b { display: block; margin-bottom: 2px; }
-    .warn ul { margin: 4px 0 0; padding-left: 18px; }
-    .warn li { margin-bottom: 2px; }
+    .warn .warn-title { display: block; font-weight: 650; margin-bottom: 4px; }
+    .warn ul { margin: 5px 0 0; padding-left: 18px; }
+    .warn li { margin-bottom: 3px; }
     .foot { margin: 22px 0 0; font-size: .74rem; opacity: .4; }
     .toast {
       position: fixed; left: 50%; bottom: 26px; transform: translateX(-50%) translateY(20px);
@@ -99,8 +99,8 @@
         <span class="chev">&rsaquo;</span>
       </a>
       <div class="warn">
-        <b>⚠ Samsung Calendar limitation</b>
-        Samsung can’t subscribe to a live calendar — it only <i>imports</i> a copy, so:
+        <span class="warn-title">⚠ Samsung Calendar limitation</span>
+        Samsung can’t subscribe to a live calendar. It only <i>imports</i> a copy, so:
         <ul>
           <li>Events are a one-time snapshot and <b>won’t update</b> when we change the schedule.</li>
           <li>You’ll need to <b>re-scan</b> this code to get the latest events.</li>
@@ -120,7 +120,7 @@
       </a>
       <ol class="steps">
         <li><b>Tap the button above.</b></li>
-        <li>A box will pop up asking to subscribe — tap <b>Subscribe</b>.</li>
+        <li>A box will pop up asking to subscribe, tap <b>Subscribe</b>.</li>
         <li>Tap <b>Done</b>. The events are now in your Calendar app.</li>
       </ol>
     </div>
@@ -149,13 +149,13 @@
         <span class="chev">&rsaquo;</span>
       </a>
       <ol class="steps">
-        <li><b>Google:</b> the link is copied and Google’s <b>“From URL”</b> page opens — paste it and click <b>Add calendar</b>.</li>
+        <li><b>Google:</b> the link is copied and Google’s <b>“From URL”</b> page opens, paste it and click <b>Add calendar</b>.</li>
         <li><b>Apple:</b> confirm the <b>Subscribe</b> prompt in Calendar.</li>
         <li><b>Samsung:</b> downloads an <code>.ics</code> snapshot to import.</li>
       </ol>
       <div class="warn">
-        <b>⚠ Samsung Calendar limitation</b>
-        Samsung only imports a one-time copy — events <b>won’t auto-update</b>, so you’ll need to re-import to get schedule changes. Use <b>Google</b> or <b>Apple</b> for automatic updates.
+        <span class="warn-title">⚠ Samsung Calendar limitation</span>
+        Samsung only imports a one-time copy, so events <b>won’t auto-update</b>, so you’ll need to re-import to get schedule changes. Use <b>Google</b> or <b>Apple</b> for automatic updates.
       </div>
     </div>
 
@@ -169,7 +169,7 @@
       <span class="lbl">Outlook Calendar</span>
       <span class="chev">&rsaquo;</span>
     </a>
-    <p class="note">Opens Outlook.com with the link already filled in — just tap <b>Save</b> to subscribe.</p>
+    <p class="note">Opens Outlook.com with the link already filled in, just tap <b>Save</b> to subscribe.</p>
 
     <p class="foot">TBC South</p>
   </div>
@@ -184,7 +184,7 @@
     const CAL_NAME = 'TBC South';
     const WEBCAL   = ICS_URL.replace(/^https?:\/\//i, 'webcal://');
     const ADDBYURL = 'https://calendar.google.com/calendar/u/0/r/settings/addbyurl';
-    // Outlook.com deep link — pre-fills the feed URL & name, user just confirms
+    // Outlook.com deep link,pre-fills the feed URL & name, user just confirms
     const OUTLOOK  = 'https://outlook.live.com/calendar/0/addfromweb?url=' +
                      encodeURIComponent(ICS_URL) + '&name=' + encodeURIComponent(CAL_NAME);
     const ua = navigator.userAgent || '';
