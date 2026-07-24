@@ -94,23 +94,6 @@
         <li style="color:#d93025"><b>Long-press the URL box</b> and choose <b>Paste</b>.</li>
         <li>Tap <b>Add calendar</b>. The events appear within a few hours.</li>
       </ol>
-      <div class="divider" style="margin-top:20px"><span>Or use Samsung</span></div>
-      <a class="btn" id="samsungBtn" href="#">
-        <span class="ico">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="3" stroke="#1428A0" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="#1428A0" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </span>
-        <span class="lbl">Samsung Calendar</span>
-        <span class="chev">&rsaquo;</span>
-      </a>
-      <div class="warn">
-        <span class="warn-title">⚠ Samsung Calendar limitation</span>
-        Samsung can’t subscribe to a live calendar. It only <i>imports</i> a copy, so:
-        <ul>
-          <li>Events are a one-time snapshot and <b>won’t update</b> when we change the schedule.</li>
-          <li>You’ll need to <b>re-scan</b> this code to get the latest events.</li>
-        </ul>
-        For automatic updates, use <b>Google Calendar</b> above instead.
-      </div>
     </div>
 
     <!-- IPHONE / APPLE -->
@@ -145,22 +128,11 @@
         <span class="lbl">Apple Calendar</span>
         <span class="chev">&rsaquo;</span>
       </a>
-      <a class="btn" id="samsungBtnD" href="#">
-        <span class="ico">
-          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="3" stroke="#1428A0" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="#1428A0" stroke-width="1.8" stroke-linecap="round"/></svg>
-        </span>
-        <span class="lbl">Samsung Calendar</span>
-        <span class="chev">&rsaquo;</span>
-      </a>
       <ol class="steps">
         <li><b>Google:</b> the link is copied and Google’s <b>“From URL”</b> page opens, paste it and click <b>Add calendar</b>.</li>
         <li><b>Apple:</b> confirm the <b>Subscribe</b> prompt in Calendar.</li>
         <li><b>Samsung:</b> downloads an <code>.ics</code> snapshot to import.</li>
       </ol>
-      <div class="warn">
-        <span class="warn-title">⚠ Samsung Calendar limitation</span>
-        Samsung only imports a one-time copy, so events <b>won’t auto-update</b>. So you’ll need to re-import to get schedule changes. Use <b>Google</b> or <b>Apple</b> for automatic updates.
-      </div>
     </div>
 
     <div class="divider"><span>Also works with</span></div>
@@ -184,6 +156,43 @@
     </div>
     <p class="note hidden" id="googleNoteI">Google: <b>Long-press the URL box</b> and choose <b>Paste</b>.</p>
     <p class="note">Outlook: opens with the link already filled in, just tap <b>Save</b> to subscribe.</p>
+
+    <!-- SAMSUNG (Android), shown after Outlook -->
+    <div id="samsungBlockA" class="hidden">
+      <div class="divider" style="margin-top:20px"><span>Or use Samsung</span></div>
+      <a class="btn" id="samsungBtn" href="#">
+        <span class="ico">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="3" stroke="#1428A0" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="#1428A0" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        <span class="lbl">Samsung Calendar</span>
+        <span class="chev">&rsaquo;</span>
+      </a>
+      <div class="warn">
+        <span class="warn-title">⚠ Samsung Calendar limitation</span>
+        Samsung can’t subscribe to a live calendar. It only <i>imports</i> a copy, so:
+        <ul>
+          <li>Events are a one-time snapshot and <b>won’t update</b> when we change the schedule.</li>
+          <li>You’ll need to <b>re-scan</b> this code to get the latest events.</li>
+        </ul>
+        For automatic updates, use <b>Google Calendar</b> above instead.
+      </div>
+    </div>
+
+    <!-- SAMSUNG (Desktop), shown after Outlook -->
+    <div id="samsungBlockD" class="hidden">
+      <div class="divider" style="margin-top:20px"><span>Or use Samsung</span></div>
+      <a class="btn" id="samsungBtnD" href="#">
+        <span class="ico">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4.5" width="18" height="16" rx="3" stroke="#1428A0" stroke-width="1.8"/><path d="M3 9h18M8 2.5v4M16 2.5v4" stroke="#1428A0" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </span>
+        <span class="lbl">Samsung Calendar</span>
+        <span class="chev">&rsaquo;</span>
+      </a>
+      <div class="warn">
+        <span class="warn-title">⚠ Samsung Calendar limitation</span>
+        Samsung only imports a one-time copy, so events <b>won’t auto-update</b>. So you’ll need to re-import to get schedule changes. Use <b>Google</b> or <b>Apple</b> for automatic updates.
+      </div>
+    </div>
 
     <p class="foot">TBC South</p>
   </div>
@@ -235,6 +244,7 @@
     if (isAndroid) {
       document.getElementById('android').classList.remove('hidden');
       document.getElementById('googleBtn').addEventListener('click', openGoogle);
+      document.getElementById('samsungBlockA').classList.remove('hidden');
       document.getElementById('samsungBtn').addEventListener('click', openSamsung);
     } else if (isIOS) {
       document.getElementById('ios').classList.remove('hidden');
@@ -246,6 +256,7 @@
       document.getElementById('desktop').classList.remove('hidden');
       document.getElementById('googleBtnD').addEventListener('click', openGoogle);
       document.getElementById('appleBtnD').addEventListener('click', openApple);
+      document.getElementById('samsungBlockD').classList.remove('hidden');
       document.getElementById('samsungBtnD').addEventListener('click', openSamsung);
     }
     document.getElementById('outlookBtn').addEventListener('click', openOutlook);
